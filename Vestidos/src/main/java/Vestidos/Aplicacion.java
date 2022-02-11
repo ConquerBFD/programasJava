@@ -1,0 +1,457 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package Vestidos;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+/**
+ *
+ * @author esteb
+ */
+public class Aplicacion extends javax.swing.JFrame {
+    private final Implementa implementa=new Implementa();
+    private ArrayList<Implementa> listaImplementa = new ArrayList<Implementa>();
+    private Datos datos = new Datos();
+    
+    private DefaultTableModel dtmDatos=new DefaultTableModel();
+    //private DefaultListModel dlmEstudiantes=new DefaultListModel();
+    //private JComboBox combo;
+    
+    private Object[] dato=new Object[5];
+    private ArrayList arregloLista=new ArrayList();
+    private File archivos =new File ("vestidos.txt");
+    private FileReader fr; //= new FileReader (archivo);
+    private BufferedReader  br; // = new BufferedReader(fr);
+    private FileWriter fw; //=new FileWriter("estudiantes.txt", true);
+    
+    /**
+     * Creates new form Aplicacion
+     */
+    public Aplicacion() {
+        initComponents();
+    }
+    public void llenarTablaArchivo() throws FileNotFoundException
+    {
+            String talla, color,marca,precio,preciototal,linea;
+        try {
+            FileReader fr = new FileReader("vestidos.txt");
+            BufferedReader bf = new BufferedReader(fr);
+            String titulos[] = {"TALLA","COLOR","MARCA","PRECIO", "PRECIO TOTAL"};
+            dtmDatos.setColumnIdentifiers(titulos);
+            Scanner registro=null;
+            registro=new Scanner(archivos);
+            linea=datos.getTalla()+"\t"+datos.getColor()+"\t"+datos.getMarca()+"\t"+datos.getPrecio()+"\t"+datos.getPreciototal()+"\n";
+            
+            while(registro.hasNextLine())
+            {
+                talla=registro.nextLine();
+                color=registro.nextLine();
+                marca=registro.nextLine();
+                precio=registro.nextLine();
+                preciototal=registro.nextLine();
+                dtmDatos.addRow(new Object[]{talla, color, marca, precio, preciototal });
+            }
+      }
+      catch(NoSuchElementException ex){
+          System.out.println("No hay nada en el archivo");
+      }
+    }
+
+public void llenarTablaEstudiantes() {
+        
+        try{
+            String titulos[] = {"TALLA","COLOR","MARCA","PRECIO", "PRECIO TOTAL"};
+            dtmDatos.setColumnIdentifiers(titulos);
+            //dtmRol.getDataVector().removeAllElements();
+            dato[0]=txt_talla.getText();
+            dato[1]=txt_color.getText();
+            dato[2]=txt_marca.getText();
+            dato[3]=txt_precio.getText();
+            float preciofloat;
+            preciofloat = Float.parseFloat(txt_precio.getText());
+            dato[4]=((preciofloat*12)/100);   
+            dtmDatos.addRow(dato);
+            tbl_datos.setModel(dtmDatos);
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null,e.getMessage(),"mensaje obtiene ROL",JOptionPane.ERROR_MESSAGE);
+        }
+        //JOptionPane.showMessageDialog(null,"datos de retorno "+ datos[0] + " = "+ datos[1],"mensaje llenar tabla",JOptionPane.ERROR_MESSAGE);    
+        txt_talla.setText("");
+        txt_color.setText("");
+        txt_marca.setText("");
+        txt_precio.setText("");
+        lbl_datoingresado.setText("");
+             
+    } //--------fin llenarTAblaRol()-------------   
+
+public void guardarTablaArchivo()
+    {
+        try{
+            FileWriter fw = new FileWriter("vestidos.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(int i=0; i<tbl_datos.getRowCount(); i++)
+            {
+                fw.write(dtmDatos.getValueAt(i,0).toString()+"\t");
+                fw.write(dtmDatos.getValueAt(i,1).toString()+"\t");
+                fw.write(dtmDatos.getValueAt(i,2).toString()+"\t");
+                fw.write(dtmDatos.getValueAt(i,3).toString()+"\t");
+                fw.write(dtmDatos.getValueAt(i,4).toString()+"\n");
+            }
+            fw.close();
+            JOptionPane.showMessageDialog(null, "Archivo Guardado satisfactoriamente ");
+        }catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Revisar : "+ ex.getMessage());
+        }
+    }
+   
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel7 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_talla = new javax.swing.JTextField();
+        txt_precio = new javax.swing.JTextField();
+        txt_marca = new javax.swing.JTextField();
+        txt_color = new javax.swing.JTextField();
+        btn_ingresardatos = new javax.swing.JButton();
+        btn_guardararchivo = new javax.swing.JButton();
+        btn_contarvestidos = new javax.swing.JButton();
+        btn_borrardatosarchivo = new javax.swing.JButton();
+        btn_limpiarlista = new javax.swing.JButton();
+        lbl_contvestidos = new javax.swing.JLabel();
+        lbl_datoingresado = new javax.swing.JLabel();
+        btn_salir = new javax.swing.JButton();
+        btn_limpiarpanel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_datos = new javax.swing.JTable();
+        btn_mostrardatosarchivo = new javax.swing.JToggleButton();
+
+        jLabel7.setText("jLabel7");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Datos de vestidos");
+
+        jLabel2.setText("Talla");
+
+        jLabel3.setText("Color:");
+
+        jLabel4.setText("Marca:");
+
+        jLabel5.setText("Precio:");
+
+        txt_talla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tallaActionPerformed(evt);
+            }
+        });
+
+        btn_ingresardatos.setText("INGRESAR DATOS");
+        btn_ingresardatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ingresardatosActionPerformed(evt);
+            }
+        });
+
+        btn_guardararchivo.setText("GUARDAR ARCHIVO");
+        btn_guardararchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_guardararchivoActionPerformed(evt);
+            }
+        });
+
+        btn_contarvestidos.setText("CONTAR VESTIDOS");
+        btn_contarvestidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_contarvestidosActionPerformed(evt);
+            }
+        });
+
+        btn_borrardatosarchivo.setText("BORRAR DATOS ARCHIVO");
+        btn_borrardatosarchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_borrardatosarchivoActionPerformed(evt);
+            }
+        });
+
+        btn_limpiarlista.setText("LIMPIAR LISTA");
+
+        lbl_contvestidos.setText("---");
+
+        lbl_datoingresado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_salir.setText("SALIR");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
+
+        btn_limpiarpanel.setText("LIMPIAR PANEL");
+        btn_limpiarpanel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpiarpanelActionPerformed(evt);
+            }
+        });
+
+        tbl_datos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Talla", "Color", "Marca", "Precio", "Precio total"
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_datos);
+
+        btn_mostrardatosarchivo.setText("MOSTRAR DATOS DEL ARCHIVO ");
+        btn_mostrardatosarchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_mostrardatosarchivoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_talla, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_color, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_datoingresado, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_mostrardatosarchivo))
+                        .addGap(39, 39, 39)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_limpiarpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_limpiarlista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_guardararchivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_contarvestidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_borrardatosarchivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_ingresardatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addComponent(lbl_contvestidos, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(268, 268, 268)
+                        .addComponent(btn_salir)))
+                .addContainerGap(131, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_talla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_ingresardatos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txt_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_guardararchivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_contarvestidos)
+                            .addComponent(lbl_contvestidos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_borrardatosarchivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_limpiarlista)
+                            .addComponent(lbl_datoingresado, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_limpiarpanel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(btn_salir))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_mostrardatosarchivo)
+                        .addGap(14, 14, 14)))
+                .addGap(61, 61, 61))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_tallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tallaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tallaActionPerformed
+
+    private void btn_ingresardatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresardatosActionPerformed
+        // TODO add your handling code here:
+        llenarTablaEstudiantes();
+        lbl_datoingresado.setText("Talla: "+ txt_talla.getText()+ "\n"+"Color: "+txt_color.getText() +" \n"+"Marca: "+txt_marca+" \n"+"Precio: "+txt_precio);
+    }//GEN-LAST:event_btn_ingresardatosActionPerformed
+
+    private void btn_guardararchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardararchivoActionPerformed
+        // TODO add your handling code here:
+        guardarTablaArchivo();
+        try {
+            implementa.grabarArchivo(txt_talla.getText()+"\t"+txt_color.getText()+"\t"+txt_marca.getText()+"\t"+txt_precio.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(Aplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_guardararchivoActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        // TODO add your handling code here:
+        System.exit(WIDTH);
+    }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void btn_contarvestidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_contarvestidosActionPerformed
+        // TODO add your handling code here:
+        try {
+            FileReader fr = new FileReader("vestidos.txt");
+            try (BufferedReader bf = new BufferedReader(fr)) {
+                String vestidos = bf.lines().count()+"";
+                lbl_contvestidos.setText("El archivo tiene" +vestidos+ "vestidos ingresados");
+            }
+        } catch (IOException e) {
+        }
+    }//GEN-LAST:event_btn_contarvestidosActionPerformed
+
+    private void btn_borrardatosarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrardatosarchivoActionPerformed
+        // TODO add your handling code here:
+        implementa.borrarDatos();
+    }//GEN-LAST:event_btn_borrardatosarchivoActionPerformed
+
+    private void btn_limpiarpanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarpanelActionPerformed
+        // TODO add your handling code here:
+        txt_talla.setText("");
+        txt_color.setText("");
+        txt_marca.setText("");
+        txt_precio.setText("");
+        lbl_datoingresado.setText("");
+    }//GEN-LAST:event_btn_limpiarpanelActionPerformed
+
+    private void btn_mostrardatosarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_mostrardatosarchivoActionPerformed
+        try {
+            // TODO add your handling code here:
+            llenarTablaArchivo();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Aplicacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_mostrardatosarchivoActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Aplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Aplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Aplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Aplicacion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Aplicacion().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_borrardatosarchivo;
+    private javax.swing.JButton btn_contarvestidos;
+    private javax.swing.JButton btn_guardararchivo;
+    private javax.swing.JButton btn_ingresardatos;
+    private javax.swing.JButton btn_limpiarlista;
+    private javax.swing.JButton btn_limpiarpanel;
+    private javax.swing.JToggleButton btn_mostrardatosarchivo;
+    private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_contvestidos;
+    private javax.swing.JLabel lbl_datoingresado;
+    private javax.swing.JTable tbl_datos;
+    private javax.swing.JTextField txt_color;
+    private javax.swing.JTextField txt_marca;
+    private javax.swing.JTextField txt_precio;
+    private javax.swing.JTextField txt_talla;
+    // End of variables declaration//GEN-END:variables
+}
